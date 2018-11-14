@@ -9,52 +9,47 @@ class Array:
     def create(cls):
         cls.list = [i for i in range(cls.spacing, cls.length*cls.spacing + 1, cls.spacing)]
 
-    def search(cls, toFind):
-        min = 0
-        max = len(cls.list)
-        counter = 0
-        ## loop through list dividing it into halves until index is returned
-        while True:
-            if toFind > max-1:
-                cls.count = counter
-                cls.index = -1
-                return cls
-            m = (min + max) // 2 ##Find the value at the centre of list
-            ## Conditional to choose side with most likelyhood of containing the number
-            ##Increment counter with every loop through
-            if cls.list[m] < toFind:
-                min = m + 1
-                counter = counter + 1
-            elif cls.list[m] > toFind:
-                max = m - 1
-                counter = counter + 1
-            else:
-                cls.count = counter
-                cls.index = m
-                return cls
+    def toTwenty(cls):
+        return Array(cls, 20, 1)
 
+    def toForty(cls):
+        return Array(cls, 20, 2)
+
+    def toOneThousand(cls):
+        return Array(cls, 100, 10)
+
+    
 class binarySearch:
     from binarySearch import Array
 
-    def __init__(self, numItems = None, spacing = None):
-        self.obj = Array(numItems, spacing)
-        self.list = self.obj.list
-    
-    ##toTwenty() returns [1, 2, 3 . . . 20]
-    def toTwenty(self):
-        return binarySearch(20, 1).list
+    def __init__(self, numItems, spacing):
+        self.binarySearch = Array(numItems, spacing)
+        self.length = self.binarySearch.length
+        self.list = self.binarySearch.list
 
-    ##toForty() returns [2, 4, 6 . . . 40]
-    def toForty(self):
-        return binarySearch(20, 2).list
+    def __getitem__(self, position):
+        return self.list[position]
 
-    ##toOneThousand() returns [10, 20, 30 . . . 1000]
-    def toOneThousand(self):
-        return binarySearch(100, 10).list
-
-    ##Search
     def search(self, toFind):
-        srch = self.obj.search(self, toFind)
-
-a = binarySearch(20,1)
-print(a.toOneThousand())
+        self.list.sort()
+        min = 0
+        max = len(self.list) - 1
+        counter = 0
+        ## loop through list dividing it into halves until index is returned
+        while True:
+            if max < min:
+                self.count = counter
+                self.index = -1
+                return {"count": self.count, "index": self.index}
+            m = (min + max) // 2 ##Find the value at the centre of list
+            ## Conditional to choose side with most likelyhood of containing the number
+            ##Increment counter with every loop through
+            if self.list[m] < toFind:
+                min = m + 1
+            elif self.list[m] > toFind:
+                max = m - 1
+            else:
+                self.count = counter
+                self.index = m
+                return {"count": self.count, "index": self.index}
+            counter = counter + 1
