@@ -1,5 +1,6 @@
 class Array:
 
+    ##Create new Array object and return the object
     def __new__(cls, numItems, spacing):
             cls.length = numItems
             cls.spacing = spacing
@@ -37,6 +38,14 @@ class binarySearch:
         counter = 0
         ## loop through list dividing it into halves until index is returned
         while True:
+            if toFind == self.list[-1]:
+                self.count = counter
+                self.index = len(self.list) - 1
+                return {"count": self.count, "index": self.index}
+            elif toFind == self.list[0]:
+                self.count = counter
+                self.index = self.list.index(self.list[0])
+                return {"count": self.count, "index": self.index}
             if max < min:
                 self.count = counter
                 self.index = -1
